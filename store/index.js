@@ -25,6 +25,11 @@ export default () =>
             addPostState(state, post) {
                 state.loadData.push(post)
             },
+
+            editPostState(state, editPost) {
+                const postIndex = state.loadData.findIndex((post) => post.id === editPost.id)
+                state.loadData[postIndex] = editPost
+            },
         },
         actions: {
             nuxtServerInit(vuexContext, context) {
@@ -41,6 +46,7 @@ export default () =>
                         context.error(err)
                     })
             },
+
             addPost(vuexContext, post) {
                 const createPost = { ...post }
 
@@ -58,6 +64,21 @@ export default () =>
                     })
                     .catch((err) => {
                         console.error(err.response.data)
+                    })
+            },
+
+            editPost(vuexContext, post) {
+                console.log(post)
+                return axios
+                    .put(
+                        'https://nuxt-tutorial-1f803-default-rtdb.asia-southeast1.firebasedatabase.app/posts/' +
+                            post.id +
+                            '.json',
+                        post
+                    )
+                    .then((res) => {
+                        console.log(res)
+                        vuexContext.commit('editPostState', post)
                     })
             },
         },

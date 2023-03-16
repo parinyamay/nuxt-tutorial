@@ -1,6 +1,6 @@
 <template>
     <b-container fluid="md" class="py-2">
-        <h2 align="center">เขียนบทความ</h2>
+        <h2 align="center">{{ header }}</h2>
         <b-form @submit="onSubmit" @reset="onReset">
             <b-form-group label="ชื่อบทความ">
                 <b-form-input v-model="form.title" type="text" placeholder="ระบุชื่อบทความ" />
@@ -31,6 +31,7 @@ export default {
     },
     data() {
         return {
+            header: this.post ? 'แก้ไขบทความ' : 'เขียนบทความ',
             form: this.post
                 ? { ...this.post }
                 : {
