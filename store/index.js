@@ -21,6 +21,10 @@ export default () =>
             setPostState(state, posts) {
                 state.loadData = posts
             },
+
+            addPostState(state, post) {
+                state.loadData.push(post)
+            },
         },
         actions: {
             nuxtServerInit(vuexContext, context) {
@@ -35,6 +39,25 @@ export default () =>
                     })
                     .catch((err) => {
                         context.error(err)
+                    })
+            },
+            addPost(vuexContext, post) {
+                const createPost = { ...post }
+
+                return axios
+                    .post(
+                        'https://nuxt-tutorial-1f803-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json',
+                        createPost
+                    )
+                    .then((res) => {
+                        console.log(res)
+                        vuexContext.commit('addPostState', {
+                            id: res.data.name,
+                            ...createPost,
+                        })
+                    })
+                    .catch((err) => {
+                        console.error(err.response.data)
                     })
             },
         },
