@@ -10,9 +10,9 @@
             class="mb-2 mx-auto"
         >
             <b-card-text>
-                {{ content }}
+                {{ content.slice(0, 100) + '...' }}
             </b-card-text>
-            <nuxt-link class="btn btn-success" :to="postLink"> read more </nuxt-link>
+            <nuxt-link class="btn btn-success" :to="postLink"> {{ isAdmin ? 'แก้ไขบทความ' : 'อ่านบทความ' }} </nuxt-link>
         </b-card>
     </b-col>
 </template>
