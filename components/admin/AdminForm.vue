@@ -23,14 +23,22 @@
 
 <script>
 export default {
+    props: {
+        post: {
+            type: Object,
+            required: true,
+        },
+    },
     data() {
         return {
-            form: {
-                title: '',
-                content: '',
-                image: '',
-                author: '',
-            },
+            form: this.post
+                ? { ...this.post }
+                : {
+                      title: '',
+                      content: '',
+                      image: '',
+                      author: '',
+                  },
         }
     },
     methods: {
